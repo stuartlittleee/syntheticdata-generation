@@ -395,8 +395,8 @@ def main() -> None:
     df = generate_dataset(row_count=args.rows, seed=args.seed)
     df.to_csv(args.output, index=False)
 
-    risk_percentages = df["risk_level"].value_counts(normalize=True) * 100
-    counts = risk_percentages.round(1).to_dict()
+    risk_percentages = (df["risk_level"].value_counts(normalize=True) * 100).round(1)
+    counts = {risk: float(risk_percentages.get(risk, 0.0)) for risk in RISK_LEVELS}
     print(f"Generated {len(df)} rows -> {args.output}")
     print(f"Risk distribution (%): {counts}")
     print(f"Columns: {SCHEMA_COLUMNS}")
