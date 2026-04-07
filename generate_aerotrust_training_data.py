@@ -346,7 +346,9 @@ def build_narrative(s: Scenario) -> str:
 
 def generate_dataset(row_count: int, seed: int | None = None) -> pd.DataFrame:
     if row_count < 1000:
-        raise ValueError("row_count must be >= 1000 to satisfy the 1,000+ requirement.")
+        raise ValueError(
+            "row_count must be >= 1000 to ensure sufficient dataset size for model training diversity."
+        )
     if seed is not None:
         random.seed(seed)
 
