@@ -336,7 +336,8 @@ def build_narrative(s: Scenario) -> str:
     action = action_template.format(part=s.part, amm=s.amm, fault=s.fault)
     followup = random.choice(FOLLOWUP_BY_RISK[s.risk_level])
 
-    closeout_count = 1 if s.risk_level == "Low" else 2 if s.risk_level == "Medium" else 3
+    closeout_counts = {"Low": 1, "Medium": 2, "Critical": 3}
+    closeout_count = closeout_counts[s.risk_level]
     closeouts = " ".join(random.sample(CLOSEOUT_LINES, k=closeout_count))
 
     return f"{intro} {finding} {action} {followup} {closeouts}"
@@ -393,7 +394,8 @@ def main() -> None:
     df = generate_dataset(row_count=args.rows, seed=args.seed)
     df.to_csv(args.output, index=False)
 
-    counts = df["risk_level"].value_counts(normalize=True).mul(100).round(1).to_dict()
+    risk_percentages = df["risk_level"].value_counts(normalize=True) * 100
+    counts = risk_percentages.round(1).to_dict()
     print(f"Generated {len(df)} rows -> {args.output}")
     print(f"Risk distribution (%): {counts}")
     print(f"Columns: {list(df.columns)}")
