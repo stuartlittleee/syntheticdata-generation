@@ -20,6 +20,7 @@ import pandas as pd
 
 SYSTEM_CATEGORIES = ["Avionics", "Hydraulics", "Structural", "Propulsion", "Cabin/ECS"]
 RISK_LEVELS = ["Low", "Medium", "Critical"]
+SCHEMA_COLUMNS = ["raw_narrative", "system_category", "risk_level"]
 
 # Target distribution requested by user: ~60/30/10.
 RISK_DISTRIBUTION = {"Low": 0.60, "Medium": 0.30, "Critical": 0.10}
@@ -361,7 +362,7 @@ def generate_dataset(row_count: int, seed: int | None = None) -> pd.DataFrame:
             }
         )
 
-    return pd.DataFrame(records, columns=["raw_narrative", "system_category", "risk_level"])
+    return pd.DataFrame(records, columns=SCHEMA_COLUMNS)
 
 
 def parse_args() -> argparse.Namespace:
@@ -398,7 +399,7 @@ def main() -> None:
     counts = risk_percentages.round(1).to_dict()
     print(f"Generated {len(df)} rows -> {args.output}")
     print(f"Risk distribution (%): {counts}")
-    print(f"Columns: {list(df.columns)}")
+    print(f"Columns: {SCHEMA_COLUMNS}")
 
 
 if __name__ == "__main__":
