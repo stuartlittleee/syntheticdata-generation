@@ -18,7 +18,7 @@ pip install pandas
 ### Usage
 
 ```bash
-python /home/runner/work/syntheticdata-generation/syntheticdata-generation/generate_aerotrust_training_data.py --rows 1200 --seed 42 --output /home/runner/work/syntheticdata-generation/syntheticdata-generation/aerotrust_training_data.csv
+python generate_aerotrust_training_data.py --rows 1200 --seed 42 --output aerotrust_training_data.csv
 ```
 
 The script outputs a CSV with exactly these columns:
